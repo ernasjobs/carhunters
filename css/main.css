@@ -1,0 +1,133 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+.navbar-nav  {
+	margin-left: 300px;
+}
+.navbar-brand{
+	margin-left: 20px;
+	color: white;
+	font-weight: bold;
+}
+.navbar-brand:hover{
+	margin-left: 20px;
+	color: #00d7d2;
+	font-weight: bold;
+
+}
+.far{
+	color: white;
+	font-size: 28px;
+	margin-left: 450px;
+
+}
+.fa-user:hover{
+	color: #00d7d2;
+	font-size: 28px;
+	margin-left: 450px;
+
+}
+.navbar{
+	font-size: 16px;
+	background-color: #313c53;
+	font-weight: bold;
+	margin-bottom: 10px;
+	height: 70px;
+}
+.nav-link{
+	color: white;
+}
+ .nav-item a:hover {
+            color: #00d7d2;
+             !important;
+            cursor: pointer;
+        }
+ .searcharea h3{
+ 	color:white ;
+ 	padding: 0px 10px;
+ }
+ .searcharea select{
+ 	background-color: #313c53;
+ 	color: white;
+ 	font-size: 18px;
+ 	font-weight: bold;
+ }
+  td{
+    padding: 20px 0px 0px 10px;
+}
+.searcharea{
+	background-color: #00d7d2;
+	width: 462px;
+	height: 230px;
+	position: absolute;
+    top: 25%;
+    margin-left: 400px;
+    border-radius: 30px;
+   
+
+}
+.btn{
+	background-color: #ff4436;
+	color: white;
+	font-weight: bold;
+	font-size: 18px;
+	border-radius: 6px;
+	width: 100px;
+	border: none;
+}
+.btn-info :hover{
+	background-color: #f51807;
+
+}
+.cardeals{
+ position: relative; 
+}
+.cardeals h1{
+ color:#313c53;
+ margin: 20px 0px;
+ 
+}
+.cardeals .card{
+ box-shadow: 0 0 20px #ccc;
+}
+.cardeals .card img{
+ width: 100%;
+ height: 100%;
+}
+.cardeals .card-title{
+ color:#313c53;
+  
+}
+.cardeals .card-body{
+ padding: 1em;
+}
+.btn-primary{
+	background-color: #ff4436;
+	width: 200px;
+	margin-left: 50px;
+}
+.btn-primary:hover{
+	background-color: #f51807;
+	width: 200px;
+	margin-left: 50px;
+}
+.page-footer{
+	margin-top: 20px;
+	background-color: #313c53;
+	color: white;
+}
+.page-footer a{
+	color: #00d7d2;
+}
+.header{
+ background-image: url('../images/carousel-lightbulb.jpg');
+ height: 80%;
+ width: 100%;
+ background-attachment: fixed;
+ background-size: cover;
+ background-position: center;
+ }
+ li~li { border-left: 1px solid #fff}	
+ 	} 
