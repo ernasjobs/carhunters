@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +17,7 @@
 <body>
 <nav class="navbar navbar-expand-md fixed-top">
   <!-- Brand -->
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="">
     CarHunterLogo
   </a>
 
@@ -39,11 +43,23 @@
       </li>
       
     </ul>
-   <a href="login.php"> <i class="far fa-user"></i></a>
+    <?php 
+    if(isset($_SESSION['name'])==true){
+      
+      echo '<a href="logout.php"><i class="far fa-user">'.'Hi!'.$_SESSION['name'].'Logout</i></a>';
+    }
+    else{
+      echo '<a href="login.php"><p><i class="far fa-user">Login<p></i></a>';
+    }
+    ?>
+   
   </div>
 </nav>
 <header class="header">
   <div class="overlay"></div>
+  <div class="usergreeting">
+  <h1>Hi...!</h1> 
+  </div>
   <div class="searcharea">
   <div class="container">
     <form>
@@ -118,55 +134,34 @@
     </form>
   </div>
 </header>
-
-
 </div>
 <div class="cardeals" id="cardeals">
   <div class="container">
   <h1>Latest Car Deals</h1>
     <div class="row">
-      <div class="col-lg-4 col-md-4 col-sm-12">
+      <?php 
+      require 'config.php';
+      $sqlQuery=$pdo->query('SELECT * FROM cars  ORDER BY `carIndex` DESC LIMIT 3');
+      while($row = $sqlQuery->fetch())
+      {
+        ?>
+        <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="card">
           <div class="card-img">
-            <img src="./images/car1.jpg" class="img-fluid">  
+            <img src="<?php echo 'images/'.$row['picture'];?>" class="img-fluid">  
           </div >
           <div class="card-body">
-            <h4 class="card-title">Post Title</h4>
-            <p class="card-text">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <h4 class="card-title"><?php echo $row['make']." ".$row['model']; ?><span class="badge  badge-info">New</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge  badge-success"><?php echo '£'.$row['price']; ?></span>  </h4>
+            
+            <p class="card-text"><?php echo $row['colour'].' | '.$row['description'].' | '.$row['miles'].' | '.$row['town']; ?></p>
           </div>
           <div class="card-footer">
-            <a href="#" class="btn btn-primary stretched-link">View</a>
+            <a href='<?php echo "viewCarDetails.php?carIndex=".$row['carIndex'].""; ?>' class="btn btn-primary stretched-link">View</a>
           </div>  
         </div>
       </div>
-      <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card">
-          <div class="card-img">
-            <img src="./images/car2.jpg" class="img-fluid">  
-          </div >
-          <div class="card-body">
-            <h4 class="card-title">Post Title</h4>
-            <p class="card-text">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-          <div class="card-footer">
-           <a href="#" class="btn btn-primary stretched-link">View</a>
-          </div>  
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-12">
-        <div class="card">
-          <div class="card-img">
-            <img src="./images/car3.jpg" class="img-fluid">  
-          </div >
-          <div class="card-body">
-            <h4 class="card-title">Post Title</h4>
-            <p class="card-text">proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary stretched-link">View</a>
-          </div>  
-        </div>
-      </div>
+      <?php } ?> 
+      
     </div> 
   </div>  
 </div>
@@ -181,9 +176,6 @@
 
 </footer>
 <!-- Footer -->
-
-
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

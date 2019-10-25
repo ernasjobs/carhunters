@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
 html,
 body {
   width: 100%;
@@ -5,6 +6,7 @@ body {
 }
 .navbar-nav  {
 	margin-left: 300px;
+	
 }
 .navbar-brand{
 	margin-left: 20px;
@@ -17,16 +19,17 @@ body {
 	font-weight: bold;
 
 }
+
 .far{
 	color: white;
-	font-size: 28px;
-	margin-left: 450px;
+	font-size: 20px;
+	margin-left: 350px;
 
 }
 .fa-user:hover{
 	color: #00d7d2;
-	font-size: 28px;
-	margin-left: 450px;
+	font-size: 20px;
+	margin-left: 350px;
 
 }
 .navbar{
@@ -34,13 +37,13 @@ body {
 	background-color: #313c53;
 	font-weight: bold;
 	margin-bottom: 10px;
-	height: 70px;
+	height: 85px;
 }
 .nav-link{
 	color: white;
 }
  .nav-item a:hover {
-            color: #00d7d2;
+            color: #00d7d2
              !important;
             cursor: pointer;
         }
@@ -129,5 +132,3 @@ body {
  background-size: cover;
  background-position: center;
  }
- li~li { border-left: 1px solid #fff}	
- 	} 

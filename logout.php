@@ -1,0 +1,13 @@
+<?php 
+session_start();
+if(isset($_SESSION['name']))
+    {
+    unset($_SESSION['name']);       
+    }
+    if(isset($_SESSION['response']))
+    {
+    unset($_SESSION['response']);       
+    }
+    header("Location:index.php");
+    exit;
+?>
