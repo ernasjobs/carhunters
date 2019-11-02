@@ -31,8 +31,6 @@ if (isset($_COOKIE["admin"])) {
         
   setcookie("admin", "", time()-3600);
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -43,9 +41,7 @@ if (isset($_COOKIE["admin"])) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="./css/main.css">
-
-  
+  <link rel="stylesheet" type="text/css" href="./css/main.css">  
 </head>
 <body>
 <nav class="navbar navbar-expand-md fixed-top">
@@ -53,12 +49,10 @@ if (isset($_COOKIE["admin"])) {
   <a class="navbar-brand" href="">
     CarHunterLogo
   </a>
-
   <!-- Toggler/collapsibe Button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <!-- Navbar links -->
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
@@ -85,7 +79,6 @@ if (isset($_COOKIE["admin"])) {
       echo '<a href="login.php"><p><i class="far fa-user">Login<p></i></a>';
     }
     ?>
-   
   </div>
 </nav>
 <header class="header">
@@ -144,11 +137,7 @@ if (isset($_COOKIE["admin"])) {
           <td>
             <select name="town" id="town" class="mdb-select md-form" searchable="Search here..">
             <option value="" disabled selected>Select town</option>
-            <option value="1">Peterborough</option>
-            <option value="2">Cambridge</option>
-            <option value="3">London</option>
-            <option value="3">Boston</option>
-            <option value="3">Spalding</option>
+            
           </select>
           </td>
         </tr>

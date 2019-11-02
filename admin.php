@@ -2,8 +2,18 @@
 session_start();
 setcookie('admin','root',time()+36000);
 require('config.php');
-
-$sqlQuery = $pdo->query('SELECT * FROM cars ORDER BY carIndex');
+if (isset($_GET['pageno'])) {
+  $pageno = $_GET['pageno'];
+} else {
+  $pageno = 1;
+}
+$no_of_records_per_page = 4;
+$offset = ($pageno-1) * $no_of_records_per_page;
+$total_pages_sql = "SELECT * FROM cars";
+$result =$pdo->prepare($total_pages_sql);
+$result->execute();
+$total_rows = $result ->rowCount();
+$total_pages = ceil($total_rows / $no_of_records_per_page);
 ?>
 
 <!DOCTYPE html>
@@ -15,8 +25,6 @@ $sqlQuery = $pdo->query('SELECT * FROM cars ORDER BY carIndex');
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="./css/admin.css">
-
-  
 </head>
 <body>
 <nav class="navbar navbar-expand-md fixed-top">
@@ -88,8 +96,10 @@ $sqlQuery = $pdo->query('SELECT * FROM cars ORDER BY carIndex');
             </thead>
             <tbody>
                 <?php
-                    
-                    while($row = $sqlQuery->fetch())
+                    $sql = "SELECT * FROM cars ORDER BY carIndex LIMIT $offset, $no_of_records_per_page";
+                    $res_data = $pdo->prepare($sql);
+                    $res_data ->execute();
+                    while($row = $res_data->fetch())
                     {
                         echo "<TR>";
                             echo "<TD >".$row['carIndex']."</TD>";
@@ -109,7 +119,19 @@ $sqlQuery = $pdo->query('SELECT * FROM cars ORDER BY carIndex');
             </tbody>
         </table>
     </div>  
-
+    <div class="container">
+      <ul class="pagination justify-content-center">
+          <li class="page-item"><a class="page-link" href="?pageno=1">First</a></li>
+          <li class="page-item <?php if($pageno <= 1){ echo 'disabled'; } ?>">
+              <a class="page-link" href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Prev</a>
+          </li>
+          <li class="page-item <?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
+              <a class="page-link" href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Next</a>
+          </li>
+          <li class="page-item"><a class="page-link"  href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+      </ul>
+    </div>
+    
 <!-- Footer -->
 
 <!-- Footer -->
