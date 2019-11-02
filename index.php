@@ -1,9 +1,37 @@
 <?php
 session_start();
+function load_make()
+{
+  $data='';
+  require 'config.php';
+  $sqlMake=$pdo->prepare('SELECT DISTINCT make FROM cars ORDER BY make ASC');
+  $sqlMake ->execute();
+  $data=$sqlMake-> fetchAll();
+  return $data;
+}
+function load_colour()
+{
+  $data='';
+  require 'config.php';
+  $sqlMake=$pdo->prepare('SELECT DISTINCT colour FROM cars ORDER BY colour ASC');
+  $sqlMake ->execute();
+  $data=$sqlMake-> fetchAll();
+  return $data;
+}
+function load_region()
+{
+  $data='';
+  require 'config.php';
+  $sqlMake=$pdo->prepare('SELECT DISTINCT region FROM cars ORDER BY region ASC');
+  $sqlMake ->execute();
+  $data=$sqlMake-> fetchAll();
+  return $data;
+}
 if (isset($_COOKIE["admin"])) {
         
   setcookie("admin", "", time()-3600);
 }
+
 
 ?>
 
@@ -67,55 +95,54 @@ if (isset($_COOKIE["admin"])) {
   </div>
   <div class="searcharea">
   <div class="container">
-    <form>
+    <form action="car-search.php" method="post">
       <h3 class="text-center">Find your favourite car</h3>
       <table>
         <tr>
           <td>
-            <select class="mdb-select md-form" searchable="Search here..">
-            <option value="" disabled selected>Select make</option>
-            <option value="1">Isuzu</option>
-            <option value="2">Jeep</option>
-            <option value="3">Kia</option>
-            <option value="3">Lexus</option>
-            <option value="3">VW</option>
-          </select>
+            <select class="mdb-select md-form" name="make" id="make" searchable="Search here..">
+            <option value="">Select Make</option>
+            <?php
+            $data=load_make();
+            foreach ($data as $row): 
+            echo '<option value="'.$row["make"].'">'.$row["make"].'</option>';
+            ?>
+            <?php endforeach ?>
+            </select>
         </td>
           <td>
-            <select class="mdb-select md-form" searchable="Search here..">
+            <select name="model" id="model" class="mdb-select md-form" searchable="Search here..">
             <option value="" disabled selected>Select model</option>
-            <option value="1">Troper</option>
-            <option value="2">Pride</option>
-            <option value="3">Cheroke</option>
-            <option value="3">Passat</option>
-            <option value="3">Golf Gti</option>
+           
           </select>
           </td>
           <td>
-            <select class="mdb-select md-form" searchable="Search here..">
+            <select name="colour" id="colour" class="mdb-select md-form" searchable="Search here..">
             <option value="" disabled selected>Select colour</option>
-            <option value="1">Blue</option>
-            <option value="2">Red</option>
-            <option value="3">Geen</option>
-            <option value="3">Black</option>
-            <option value="3">White</option>
+            <?php
+            $data=load_colour();
+            foreach ($data as $row): 
+            echo '<option value="'.$row["colour"].'">'.$row["colour"].'</option>';
+            ?>
+            <?php endforeach ?>
           </select>
           </td>
         </tr>
         <tr>
           <td></td>
           <td>
-            <select class="mdb-select md-form" searchable="Search here..">
+            <select name="region" id="region" class="mdb-select md-form" searchable="Search here..">
             <option value="" disabled selected>Select region</option>
-            <option value="1">E</option>
-            <option value="2">W</option>
-            <option value="3">SW</option>
-            <option value="3">N</option>
-            <option value="3">C</option>
+            <?php 
+            $data=load_region();
+            foreach ($data as $row): 
+            echo '<option value="'.$row["region"].'">'.$row["region"].'</option>';
+            ?>
+            <?php endforeach ?>
             </select>
           </td>
           <td>
-            <select class="mdb-select md-form" searchable="Search here..">
+            <select name="town" id="town" class="mdb-select md-form" searchable="Search here..">
             <option value="" disabled selected>Select town</option>
             <option value="1">Peterborough</option>
             <option value="2">Cambridge</option>
@@ -132,7 +159,7 @@ if (isset($_COOKIE["admin"])) {
         </tr>
         <tr>
           <td></td>
-          <td><button type="button" class="btn btn-danger">Search</button></td>
+          <td><input type="submit" name="submit" class="btn btn-danger" value="Search"></td>
           <td></td>
         </tr>
       </table>
@@ -188,3 +215,38 @@ if (isset($_COOKIE["admin"])) {
   <script type="text/javascript" src="./js/main.js"></script>
 </body>
 </html>
+<script>
+$(document).ready(function(){
+ $('#make').change(function(){
+
+   var make_id = $(this).val();
+   $.ajax({
+    url:"fetchModel.php",
+    method:"POST",
+    data:{ makeId:make_id},
+    success:function(data){
+     $('#model').html(data);
+    }
+   })
+  
+ });
+});
+</script>
+<script>
+$(document).ready(function(){
+ $('#region').change(function(){
+
+   var region_id = $(this).val();
+   $.ajax({
+    url:"fetchTown.php",
+    method:"POST",
+    data:{ regionId:region_id},
+    success:function(data){
+     $('#town').html(data);
+    }
+   })
+  
+ });
+});
+</script>
+
