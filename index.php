@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (isset($_COOKIE["admin"])) {
+        
+  setcookie("admin", "", time()-3600);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -148,7 +153,8 @@ session_start();
         <div class="col-lg-4 col-md-4 col-sm-12">
         <div class="card">
           <div class="card-img">
-            <img src="<?php echo 'images/'.$row['picture'];?>" class="img-fluid">  
+            <img src="<?php echo 'images/'.$row['picture'];?>" class="img-f+
+            luid">  
           </div >
           <div class="card-body">
             <h4 class="card-title"><?php echo $row['make']." ".$row['model']; ?><span class="badge  badge-info">New</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge  badge-success"><?php echo '£'.$row['price']; ?></span>  </h4>

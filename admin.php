@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+setcookie('admin','root',time()+36000);
 require('config.php');
 
 $sqlQuery = $pdo->query('SELECT * FROM cars ORDER BY carIndex');

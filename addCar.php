@@ -1,7 +1,8 @@
 <?php
 session_start();
 if(isset($_POST['submit']))
-{   $result='<div class="alert alert-success alert-dismissible col-3 text-center ">
+{   
+    $result='<div class="alert alert-success alert-dismissible col-3 text-center ">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     Car added succesfully
     </div>';
@@ -18,8 +19,9 @@ if(isset($_POST['submit']))
     $region = $_POST['region'];
     $picture = $_POST['picture'];
     require 'config.php';
-    $stmt = $pdo->query('SELECT * FROM cars');
-    $carIndex = $stmt->rowCount()+1;
+    $sqlQuery = $pdo->query('SELECT carIndex FROM cars ORDER BY carIndex DESC LIMIT 1');
+    $row=$sqlQuery->fetch();
+    $carIndex = $row['carIndex']+1;
     $sql = "INSERT INTO cars (make, model, Reg, colour, miles, price, dealer, town, telephone, description,carIndex,region, picture) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
     $stmt= $pdo->prepare($sql);
     $stmt->execute([$make, $model, $Reg, $colour, $miles, $price, $dealer, $town, $telephone, $description,$carIndex, $region, $picture]);

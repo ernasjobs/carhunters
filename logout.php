@@ -8,6 +8,12 @@ if(isset($_SESSION['name']))
     {
     unset($_SESSION['response']);       
     }
+
+    if (isset($_COOKIE['admin'])) {
+        
+        setcookie("admin", "", time()-3600);
+    }
+    
     header("Location:index.php");
     exit;
 ?>

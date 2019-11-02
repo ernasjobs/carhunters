@@ -43,7 +43,10 @@ else{
   </button>
   <!-- Navbar links -->
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
-    <ul class="navbar-nav">
+  <?php 
+  if(!empty($_COOKIE['admin']))
+  {
+      echo '<ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" href="addCar.php">Add a car</a>
       </li>
@@ -56,16 +59,28 @@ else{
       <li class="nav-item">
         <a class="nav-link" href="viewOrders.php">Orders</a>
       </li>   
-    </ul>
-    <?php 
+    </ul>';
     if(isset($_SESSION['name'])==true){
       
-      echo '<a href="logout.php"><i class="far fa-user">'.'Hi!'.$_SESSION['name'].'Logout</i></a>';
-    }
-    else{
-      echo '<a href="login.php"><p><i class="far fa-user">Login<p></i></a>';
-    }
-    ?>  
+        echo '<a href="logout.php"><i class="far fa-user">'.'Hi!'.$_SESSION['name'].'Logout</i></a>';
+      }
+      else{
+        echo '<a href="login.php"><p><i class="far fa-user">Login<p></i></a>';
+      }
+  }
+  else
+  {
+    if(isset($_SESSION['name'])==true){
+      
+        echo '<a href="logout.php"><i class="far fa-user">'.'Hi!'.$_SESSION['name'].'Logout</i></a>';
+      }
+      else{
+        echo '<a href="login.php"><p><i class="far fa-user">Login<p></i></a>';
+      }  
+  }
+  ?>  
+  
+    
   </div>
 </nav>
 <br>
