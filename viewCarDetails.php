@@ -126,50 +126,50 @@ else{
                         <div class="tab-content dealer-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <label>Color</label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                             <?php         
                                             echo  "<p>".$row['colour']."</p> ";  
                                              ?> 
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <label>Miles</label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                             <?php         
                                             echo  "<p>".$row['miles']."</p> ";  
                                              ?> 
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <label>Reg</label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                             <?php         
                                             echo  "<p>".$row['Reg']."</p> ";  
                                              ?> 
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <label>Description</label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                             <?php         
                                             echo  "<p>".$row['description']."</p> ";  
                                              ?> 
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <label>Price</label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                             <?php         
                                             echo  "<p>£ ".$row['price']."</p> ";  
                                              ?> 
@@ -178,40 +178,40 @@ else{
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <label>Dealer</label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                             <?php         
                                             echo  "<p>".$row['dealer']."</p> ";  
                                              ?> 
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <label>Telephone</label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                             <?php         
                                             echo  "<p>".$row['telephone']."</p> ";  
                                              ?> 
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <label>Town</label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                             <?php         
                                             echo  "<p>".$row['town']."</p> ";  
                                              ?> 
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <label>Region</label>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                             <?php         
                                             echo  "<p>".$row['region']."</p> ";  
                                              ?> 
@@ -221,11 +221,15 @@ else{
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4 justify-centre">
+                <a href="#" class="btn btn-danger">Buy</a>
+                </div>
+                <div class="col-md-4"></div>
+                </div>
               
         </div>
-<!-- Footer -->
-
-<!-- Footer -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

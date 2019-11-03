@@ -1,8 +1,27 @@
 <?php
-    $make=$_POST['make'];
-    $model=$_POST['model'];
-   
+  
+    require 'config.php';
+    session_start(); // should be at the top of your php
 
+    if (isset($_POST['make'])) {
+       $_SESSION['make'] = $_POST['make'];
+    }
+     $make = isset($_SESSION['make']) ? $_SESSION['make'] : "no var";
+    if (isset($_POST['model'])) {
+      $_SESSION['model'] = $_POST['model'];
+   }
+   $model = isset($_SESSION['model']) ? $_SESSION['model'] : "no var";
+    if (isset($_GET['pageno'])) {
+      $pageno = $_GET['pageno'];
+    } else {
+      $pageno = 1;
+    }
+    $no_of_records_per_page = 2;
+    $offset = ($pageno-1) * $no_of_records_per_page;
+    $stmt = $pdo->prepare("SELECT * FROM cars WHERE make =? AND model=? ORDER BY carIndex"); 
+    $stmt->execute([$make, $model]);
+    $total_rows = $stmt ->rowCount();
+    $total_pages = ceil($total_rows / $no_of_records_per_page);
 ?>
     
 <!DOCTYPE html>
@@ -14,12 +33,12 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="./css/main.css">  
+  <link rel="stylesheet" type="text/css" href="./css/search.css">  
 </head>
 <body>
 <nav class="navbar navbar-expand-md fixed-top">
   <!-- Brand -->
-  <a class="navbar-brand" href="">
+  <a class="navbar-brand" href="index.php">
     CarHunterLogo
   </a>
   <!-- Toggler/collapsibe Button -->
@@ -62,13 +81,10 @@
 <div class="row">
 <div class="col-md-4"></div>
 <div class="col-md-8">
-
+<h5><?php echo $total_rows.'cars(s) found' ?></h5>
 <?php
- require 'config.php';
-$stmt = $pdo->prepare("SELECT * FROM cars WHERE make =? AND model=?"); 
-$stmt->execute([$make, $model]);
-$count = $stmt->rowCount();
-echo '<h5>'.$count.' car(s) found'.'</h5>';
+$stmt = $pdo->prepare("SELECT * FROM cars WHERE make ='".$make."' AND model='".$model."' LIMIT $offset, $no_of_records_per_page "); 
+$stmt->execute();
 while($row=$stmt->fetch())
 {?>
 <div class="card mb-3" style="max-width: 540px;">
@@ -82,7 +98,6 @@ while($row=$stmt->fetch())
     <div>
 </div>   
 </h5>
-
   </div>
   <div class="row no-gutters">
     <div class="col-md-4">
@@ -102,8 +117,14 @@ while($row=$stmt->fetch())
         <div class="col-md-6"><i class="icon-vehicle icon-doors"></i><span><?php echo $row['town']?></span></div>
         
       </div>
-      
       <br>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+        <a href='<?php echo "viewCarDetails.php?carIndex=".$row['carIndex'].""; ?>' class="btn btn-info btn-sm stretched-link">View</a>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
       </div>
     </div>
   </div>
@@ -112,7 +133,18 @@ while($row=$stmt->fetch())
 <?php }?>
 </div>
 </div>
-
+<div class="container">
+      <ul class="pagination justify-content-center">
+          <li class="page-item"><a class="page-link" href="?pageno=1">First</a></li>
+          <li class="page-item <?php if($pageno <= 1){ echo 'disabled'; } ?>">
+              <a class="page-link" href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Prev</a>
+          </li>
+          <li class="page-item <?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
+              <a class="page-link" href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Next</a>
+          </li>
+          <li class="page-item"><a class="page-link"  href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+      </ul>
+    </div>
 
 <footer class="page-footer font-small blue">
 

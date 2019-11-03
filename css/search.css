@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css?family=Numans');
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+.navbar-nav  {
+	margin-left: 300px;
+	
+}
+.navbar-brand{
+	margin-left: 20px;
+	color: white;
+	font-weight: bold;
+}
+.navbar-brand:hover{
+	margin-left: 20px;
+	color: #00d7d2;
+	font-weight: bold;
+
+}
+
+.far{
+	color: white;
+	font-size: 20px;
+	margin-left: 350px;
+
+}
+.fa-user:hover{
+	color: #00d7d2;
+	font-size: 20px;
+	margin-left: 350px;
+
+}
+.navbar{
+	font-size: 16px;
+	background-color: #313c53;
+	font-weight: bold;
+	margin-bottom: 10px;
+	height: 85px;
+}
+.nav-link{
+	color: white;
+}
+ .nav-item a:hover {
+            color: #00d7d2
+             !important;
+            cursor: pointer;
+        }
+ .searcharea h3{
+ 	color:white ;
+ 	padding: 0px 10px;
+ }
+ .searcharea select{
+ 	background-color: #313c53;
+ 	color: white;
+ 	font-size: 18px;
+ 	font-weight: bold;
+ }
+  td{
+    padding: 20px 0px 0px 10px;
+}
+.searcharea{
+	background-color: #00d7d2;
+	width: 462px;
+	height: 230px;
+	position: absolute;
+    top: 25%;
+    margin-left: 400px;
+    border-radius: 30px;
+   
+
+}
+
+.cardeals{
+ position: relative; 
+}
+.cardeals h1{
+ color:#313c53;
+ margin: 20px 0px;
+ 
+}
+.cardeals .card{
+ box-shadow: 0 0 20px #ccc;
+}
+.cardeals .card img{
+ width: 100%;
+ height: 100%;
+}
+.cardeals .card-title{
+ color:#313c53;
+  
+}
+.cardeals .card-body{
+ padding: 1em;
+}
+.page-footer{
+	margin-top: 20px;
+	background-color: #313c53;
+	color: white;
+}
+.page-footer a{
+	color: #00d7d2;
+}
+.header{
+ background-image: url('../images/carousel-lightbulb.jpg');
+ height: 80%;
+ width: 100%;
+ background-attachment: fixed;
+ background-size: cover;
+ background-position: center;
+ }
+ .btn{
+	background-color: #ff4436;
+	color: white;
+	font-weight: bold;
+	font-size: 18px;
+	border-radius: 6px;
+	width: 100px;
+	border: none;
+}
