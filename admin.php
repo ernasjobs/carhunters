@@ -2,6 +2,8 @@
 session_start();
 setcookie('admin','root',time()+36000);
 require('config.php');
+if(isset($_SESSION['role']) AND $_SESSION['role']=='admin')
+{
 if (isset($_GET['pageno'])) {
   $pageno = $_GET['pageno'];
 } else {
@@ -70,7 +72,11 @@ $total_pages = ceil($total_rows / $no_of_records_per_page);
 <br>
 <br>
 <br>
-<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+  </ol>
+</nav>
     <div class="row justify-content-center">
         <div class="col-3 text-center">
             <h2>List of all cars</h2>
@@ -142,3 +148,5 @@ $total_pages = ceil($total_rows / $no_of_records_per_page);
   <script type="text/javascript" src="./js/main.js"></script>
 </body>
 </html>
+                 <?php } ?>
+                

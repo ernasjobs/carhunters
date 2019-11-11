@@ -18,6 +18,7 @@ if(isset($_POST['btnSubmit'])){
         if($query['role']=="admin"){
             header("Location:admin.php");
         }else if($query['role']=="user"){
+          
             header("Location:index.php");
         }
      

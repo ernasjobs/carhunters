@@ -1,5 +1,26 @@
 <?php
 session_start();
+if(isset($_SESSION['make']))
+{
+unset($_SESSION['make']);       
+}
+if(isset($_SESSION['model']))
+{
+unset($_SESSION['model']);       
+}
+if(isset($_SESSION['colour']))
+{
+unset($_SESSION['colour']);       
+}
+if(isset($_SESSION['min_price']))
+{
+unset($_SESSION['min_price']);       
+}
+if(isset($_SESSION['max_price']))
+{
+unset($_SESSION['max_price']);       
+}
+
 function load_make()
 {
   $data='';
@@ -23,6 +44,15 @@ function load_region()
   $data='';
   require 'config.php';
   $sqlMake=$pdo->prepare('SELECT DISTINCT region FROM cars ORDER BY region ASC');
+  $sqlMake ->execute();
+  $data=$sqlMake-> fetchAll();
+  return $data;
+}
+function load_price()
+{
+  $data='';
+  require 'config.php';
+  $sqlMake=$pdo->prepare('SELECT DISTINCT price FROM cars ORDER BY price ASC');
   $sqlMake ->execute();
   $data=$sqlMake-> fetchAll();
   return $data;
@@ -94,7 +124,7 @@ if (isset($_COOKIE["admin"])) {
         <tr>
           <td>
             <select class="mdb-select md-form" name="make" id="make" searchable="Search here..">
-            <option value="">Select Make</option>
+            <option value="" selected="true" disabled="disabled">Select Make</option>
             <?php
             $data=load_make();
             foreach ($data as $row): 
@@ -143,8 +173,29 @@ if (isset($_COOKIE["admin"])) {
         </tr>
         <tr>
           <td></td>
-          <td></td>
-          <td></td>
+          <td>
+            <select name="min_price" id="min_price" class="mdb-select md-form" searchable="Search here..">
+            <option value="" disabled selected>Min price</option>
+            <?php 
+            $data=load_price();
+            foreach ($data as $row): 
+            echo '<option value="'.$row["price"].'">'.$row["price"].'</option>';
+            ?>
+            <?php endforeach ?>
+            </select>
+          </td>
+          <td>
+            <select name="max_price" id="max_price" class="mdb-select md-form" searchable="Search here..">
+            <option value="" disabled selected>Max price</option>
+            <?php 
+            $data=load_price();
+            foreach ($data as $row): 
+            echo '<option value="'.$row["price"].'">'.$row["price"].'</option>';
+            ?>
+            <?php endforeach ?>
+            
+          </select>
+          </td>
         </tr>
         <tr>
           <td></td>

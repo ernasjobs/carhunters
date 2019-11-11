@@ -6,11 +6,25 @@
     if (isset($_POST['make'])) {
        $_SESSION['make'] = $_POST['make'];
     }
-     $make = isset($_SESSION['make']) ? $_SESSION['make'] : "no var";
+     $make = isset($_SESSION['make']) ? $_SESSION['make'] : "";
     if (isset($_POST['model'])) {
       $_SESSION['model'] = $_POST['model'];
    }
-   $model = isset($_SESSION['model']) ? $_SESSION['model'] : "no var";
+   $model = isset($_SESSION['model']) ? $_SESSION['model'] : "";
+   
+   if (isset($_POST['colour'])) {
+    $_SESSION['colour'] = $_POST['colour'];
+ }
+ $colour = isset($_SESSION['colour']) ? $_SESSION['colour'] : "";
+ if (isset($_POST['min_price'])) {
+  $_SESSION['min_price'] = $_POST['min_price'];
+}
+$min_price = isset($_SESSION['min_price']) ? $_SESSION['min_price'] : "";
+if (isset($_POST['max_price'])) {
+  $_SESSION['max_price'] = $_POST['max_price'];
+}
+$max_price = isset($_SESSION['max_price']) ? $_SESSION['max_price'] : "";
+
     if (isset($_GET['pageno'])) {
       $pageno = $_GET['pageno'];
     } else {
@@ -18,10 +32,39 @@
     }
     $no_of_records_per_page = 2;
     $offset = ($pageno-1) * $no_of_records_per_page;
-    $stmt = $pdo->prepare("SELECT * FROM cars WHERE make =? AND model=? ORDER BY carIndex"); 
+    if($make!="" AND $model!="" AND $colour!=""){
+    $stmt = $pdo->prepare("SELECT * FROM cars WHERE make =? AND model=? AND colour=? ORDER BY carIndex"); 
+    $stmt->execute([$make, $model,$colour]);
+    $total_rows = $stmt ->rowCount();
+    $total_pages = ceil($total_rows / $no_of_records_per_page);
+    $stmt = $pdo->prepare("SELECT * FROM cars WHERE make ='".$make."' AND model='".$model."' AND colour ='".$colour."'  LIMIT $offset, $no_of_records_per_page "); 
+$stmt->execute();}
+else if(($make!="" AND $model!="" AND $colour=="")){
+  $stmt = $pdo->prepare("SELECT * FROM cars WHERE make =? AND model=? ORDER BY carIndex");
     $stmt->execute([$make, $model]);
     $total_rows = $stmt ->rowCount();
     $total_pages = ceil($total_rows / $no_of_records_per_page);
+    $stmt = $pdo->prepare("SELECT * FROM cars WHERE make ='".$make."' AND model='".$model."'  LIMIT $offset, $no_of_records_per_page "); 
+$stmt->execute();
+}else if(($make=="" AND $model=="" AND $colour!="")){
+  $stmt = $pdo->prepare("SELECT * FROM cars WHERE colour =? ORDER BY carIndex");
+    $stmt->execute([$colour]);
+    $total_rows = $stmt ->rowCount();
+    $total_pages = ceil($total_rows / $no_of_records_per_page);
+    $stmt = $pdo->prepare("SELECT * FROM cars WHERE colour ='".$colour."'LIMIT $offset, $no_of_records_per_page "); 
+$stmt->execute();
+}
+else if(($make=="" AND $model=="" AND $colour=="" AND $min_price!="" AND $max_price!="")){
+  $stmt = $pdo->prepare("SELECT * FROM cars WHERE price BETWEEN :min_price AND :max_price ORDER BY carIndex");
+ $stmt -> bindParam(':min_price', $min_price, PDO::PARAM_STR);
+ $stmt -> bindParam(':max_price', $max_price, PDO::PARAM_STR);
+    $stmt->execute([$min_price,$max_price]);
+    $total_rows = $stmt ->rowCount();
+    $total_pages = ceil($total_rows / $no_of_records_per_page);
+    $stmt = $pdo->prepare("SELECT * FROM cars WHERE price BETWEEN  '".$min_price."' AND '".$max_price."'  LIMIT $offset, $no_of_records_per_page "); 
+$stmt->execute();
+}
+
 ?>
     
 <!DOCTYPE html>
@@ -76,15 +119,18 @@
 <br>
 <br>
 <br>
-<br>
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+  </ol>
+</nav>
 
 <div class="row">
 <div class="col-md-4"></div>
 <div class="col-md-8">
 <h5><?php echo $total_rows.'cars(s) found' ?></h5>
 <?php
-$stmt = $pdo->prepare("SELECT * FROM cars WHERE make ='".$make."' AND model='".$model."' LIMIT $offset, $no_of_records_per_page "); 
-$stmt->execute();
+
 while($row=$stmt->fetch())
 {?>
 <div class="card mb-3" style="max-width: 540px;">
