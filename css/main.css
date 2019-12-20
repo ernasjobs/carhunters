@@ -5,19 +5,14 @@ body {
   height: 100%;
 }
 .navbar-nav  {
-	margin-left: 300px;
+	margin-left: 200px;
 	
 }
 .navbar-brand{
-	margin-left: 20px;
-	color: white;
-	font-weight: bold;
-}
+	margin-left: 5px;
+	}
 .navbar-brand:hover{
-	margin-left: 20px;
-	color: #00d7d2;
-	font-weight: bold;
-
+	margin-left: 5px;
 }
 
 .far{
@@ -60,12 +55,12 @@ body {
   td{
     padding: 20px 0px 0px 10px;
 }
-.searcharea{
+.searcharea {
 	background-color: #00d7d2;
 	width: 462px;
 	height: 280px;
 	position: absolute;
-    top: 25%;
+    top: 22%;
     margin-left: 400px;
     border-radius: 30px;
    
@@ -126,9 +121,14 @@ body {
 }
 .header{
  background-image: url('../images/carousel-lightbulb.jpg');
- height: 80%;
+ height: 75%;
  width: 100%;
  background-attachment: fixed;
  background-size: cover;
  background-position: center;
  }
+ ul.breadcrumb {
+    position: fixed;
+    top: 40px;
+    width: 100%;
+}

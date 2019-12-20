@@ -1,4 +1,3 @@
-
 <?php
   session_start();
     require 'config.php';
@@ -8,55 +7,39 @@
       $data=array(1,2,4,6,8);
       return $data;
     }
-  
-    if (isset($_POST['make'])) {
-       $_SESSION['make'] = $_POST['make'];
-    }
-     $make = isset($_SESSION['make']) ? $_SESSION['make'] : '%';
-    if (isset($_POST['model'])) {
-      $_SESSION['model'] = $_POST['model'];
-   }
-   $model = isset($_SESSION['model']) ? $_SESSION['model'] : '%';
-   
-   if (isset($_POST['colour'])) {
-    $_SESSION['colour'] = $_POST['colour'];
- }
- $colour = isset($_SESSION['colour']) ? $_SESSION['colour'] : '%';
- if(isset($_POST['region']))
- { 
-  $_SESSION['region'] = $_POST['region'];
-}
-$region = isset($_SESSION['region']) ? $_SESSION['region'] : '%';
+    require ('inputsession.php');
+ $no_of_records_per_page=4;
+ $offset = ($pageno-1) * $no_of_records_per_page;
 
-if(isset($_POST['town']))
-{ 
- $_SESSION['town'] = $_POST['town'];
-}
-$town = isset($_SESSION['town']) ? $_SESSION['town'] : '%';
-if (isset($_POST['min_price'])) {
-  $_SESSION['min_price'] = $_POST['min_price'];
-}
-$min_price = isset($_SESSION['min_price']) ? $_SESSION['min_price'] : '%';
-if (isset($_POST['max_price'])) {
-  $_SESSION['max_price'] = $_POST['max_price'];
-}
-$max_price = isset($_SESSION['max_price']) ? $_SESSION['max_price'] : '%';
-$sold=false;
+ if($min_price=='%' AND $max_price=='%' ){
+  $stmt = $pdo->prepare("SELECT * FROM cars WHERE sold=false AND make LIKE :make AND model LIKE :model AND colour LIKE :colour 
+  AND Reg LIKE :reg AND region LIKE :region AND town LIKE :town   ORDER BY carIndex"); 
+  $stmt->bindValue(':make',$make);
+  $stmt->bindValue(':model',$model);
+  $stmt->bindValue(':colour',$colour);
+  $stmt->bindValue(':region',$region);
+  $stmt->bindValue(':town',$town);
+  $stmt->bindValue(':reg',$reg);
+  $stmt->execute();
+ 
+  $total_rows = $stmt ->rowCount();
+  $total_pages = ceil($total_rows / $no_of_records_per_page);
+  $stmt = $pdo->prepare("SELECT * FROM cars WHERE  sold=false AND make LIKE :make AND model LIKE :model AND colour LIKE :colour 
+    AND Reg LIKE :reg AND region LIKE :region AND town LIKE :town ORDER BY price
+   LIMIT $offset, $no_of_records_per_page "); 
+  $stmt->bindValue(':make',$make);
+  $stmt->bindValue(':model',$model);
+  $stmt->bindValue(':colour',$colour);
+  $stmt->bindValue(':region',$region);
+  $stmt->bindValue(':town',$town);
+  $stmt->bindValue(':reg',$reg);
+ 
+  $stmt->execute();
 
-
-    if (isset($_GET['pageno'])) {
-      $pageno = $_GET['pageno'];
-    } else {
-      $pageno = 1;
-    }
-   if(isset($_POST['no_records'])){
-    $no_of_records_per_page = $_POST['no_records'];}
-    $no_of_records_per_page=4;
-
-    $offset = ($pageno-1) * $no_of_records_per_page;
-    if($min_price=='%' AND $max_price=='%'){
-    $stmt = $pdo->prepare("SELECT * FROM cars WHERE make LIKE :make AND model LIKE :model AND colour LIKE :colour AND sold LIKE :sold
-     AND region LIKE :region AND town LIKE :town OR (price  >= :min_price AND price < :max_price)    ORDER BY carIndex"); 
+  }
+  else{
+    $stmt = $pdo->prepare("SELECT * FROM cars WHERE sold=false AND make LIKE :make AND model LIKE :model AND colour LIKE :colour 
+    AND Reg LIKE :reg AND region LIKE :region AND town LIKE :town AND (price >= :min_price AND price < :max_price)  ORDER BY carIndex"); 
     $stmt->bindValue(':make',$make);
     $stmt->bindValue(':model',$model);
     $stmt->bindValue(':colour',$colour);
@@ -64,13 +47,14 @@ $sold=false;
     $stmt->bindValue(':town',$town);
     $stmt->bindValue(':min_price',$min_price);
     $stmt->bindValue(':max_price',$max_price);
-    $stmt->bindValue(':sold',$sold);
+    $stmt->bindValue(':reg',$reg);
+    
     $stmt->execute();
     $total_rows = $stmt ->rowCount();
     $total_pages = ceil($total_rows / $no_of_records_per_page);
-    $stmt = $pdo->prepare("SELECT * FROM cars WHERE make LIKE :make AND model LIKE :model AND colour LIKE :colour 
-     AND region LIKE :region AND town LIKE :town OR (price >= :min_price AND price < :max_price)  ORDER BY price
-     LIMIT $offset, $no_of_records_per_page "); 
+    $stmt = $pdo->prepare("SELECT * FROM cars WHERE sold=false AND make LIKE :make AND model LIKE :model AND colour LIKE :colour 
+    AND Reg LIKE :reg AND region LIKE :region AND town LIKE :town AND (price >=  :min_price AND price < :max_price) ORDER BY price
+    LIMIT $offset, $no_of_records_per_page"); 
     $stmt->bindValue(':make',$make);
     $stmt->bindValue(':model',$model);
     $stmt->bindValue(':colour',$colour);
@@ -78,39 +62,12 @@ $sold=false;
     $stmt->bindValue(':town',$town);
     $stmt->bindValue(':min_price',$min_price);
     $stmt->bindValue(':max_price',$max_price);
-   
+    $stmt->bindValue(':reg',$reg);
     $stmt->execute();
 
-    }else{
-      $stmt = $pdo->prepare("SELECT * FROM cars WHERE make LIKE :make AND model LIKE :model AND colour LIKE :colour AND sold LIKE :sold
-      AND region LIKE :region AND town LIKE :town AND (price >= :min_price AND price < :max_price)   ORDER BY carIndex"); 
-      $stmt->bindValue(':make',$make);
-      $stmt->bindValue(':model',$model);
-      $stmt->bindValue(':colour',$colour);
-      $stmt->bindValue(':region',$region);
-      $stmt->bindValue(':town',$town);
-      $stmt->bindValue(':min_price',$min_price);
-      $stmt->bindValue(':max_price',$max_price);
-      $stmt->bindValue(':sold',$sold);
-      $stmt->execute();
-      $total_rows = $stmt ->rowCount();
-      $total_pages = ceil($total_rows / $no_of_records_per_page);
-      $stmt = $pdo->prepare("SELECT * FROM cars WHERE make LIKE :make AND model LIKE :model AND colour LIKE :colour 
-      AND region LIKE :region AND town LIKE :town AND (price >=  :min_price AND price < :max_price) ORDER BY price
-      LIMIT $offset, $no_of_records_per_page  "); 
-      $stmt->bindValue(':make',$make);
-      $stmt->bindValue(':model',$model);
-      $stmt->bindValue(':colour',$colour);
-      $stmt->bindValue(':region',$region);
-      $stmt->bindValue(':town',$town);
-      $stmt->bindValue(':min_price',$min_price);
-      $stmt->bindValue(':max_price',$max_price);
-      $stmt->execute();
+  }
+  ?>
 
-    }
-
-?>
-    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -166,15 +123,19 @@ $sold=false;
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+    <li class="breadcrumb-item active" >Car Results</li>
   </ol>
 </nav>
 
 <div class="row">
 <div class="col-md-4"></div>
 <div class="col-md-8">
- <label><?php echo $total_rows.'cars(s) found' ?></label> &nbsp;<?php echo $no_of_records_per_page; ?>
- <label>Number of records per page</label>&nbsp; 
- <select class="mdb-select md-form" name="no_records_filter" id="no_records_filter" searchable="Search here..">
+  
+
+
+   <h5><?php echo  $total_rows; ?> car(s) found</h5>
+ <label>Select number of records you want to see per page</label>&nbsp; 
+ <select class="mdb-select md-form" name="no_records" id="no_records" searchable="Search here.." >
             <option value="" selected="true" disabled="disabled">No</option>
             <?php
             $data=load_dropdown();
@@ -183,8 +144,8 @@ $sold=false;
             ?>
             <?php endforeach ?>
             </select>
-           
-<?php
+ <div id="initialSearch">
+            <?php
 
 while($row=$stmt->fetch())
 {?>
@@ -234,7 +195,9 @@ while($row=$stmt->fetch())
 <?php }?>
 </div>
 </div>
-<div class="container">
+            </div>
+            <div id="results"></div>
+            <div id="pag1" class="container">
       <ul class="pagination justify-content-center">
           <li class="page-item"><a class="page-link" href="?pageno=1">First</a></li>
           <li class="page-item <?php if($pageno <= 1){ echo 'disabled'; } ?>">
@@ -246,6 +209,12 @@ while($row=$stmt->fetch())
           <li class="page-item"><a class="page-link"  href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
       </ul>
     </div>
+    <div id="pag2">
+     
+    </div>
+    
+</div>
+</div>      
 
 <footer class="page-footer font-small blue">
 
@@ -258,14 +227,37 @@ while($row=$stmt->fetch())
 </footer>
 <!-- Footer -->
  
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="./js/main.js"></script>
 </head>
 </body>
 </html>
 <script>
+$(document).ready(function(){
+ $('#no_records').change(function(){
 
+   var no_records_value = $(this).val();
+   $.ajax({
+    url:"fetchCars.php",
+    type:"POST",
+    data:{ makeId:no_records_value},
+    success:function(data){
+     $('#results').html(data);
+     $('#pag2').html(data);
+     console.log(no_records_value);
+     
+    }
+   })
+  
+ });
+});
+var elem = document.getElementById("no_records");
+elem.onchange = function(){
+    var hiddenDiv = document.getElementById("initialSearch");
+    var hiddenPag1=document.getElementById("pag1");
+    hiddenDiv.style.display = (this.value == "") ? "block":"none";
+    hiddenPag1.style.display = (this.value == "") ? "block":"none";
+};
 </script>
-
-

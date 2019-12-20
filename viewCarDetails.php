@@ -1,12 +1,18 @@
 <?php
 session_start();
+/*
+checks if carIndex is being passed in url
+if yes, run a query in database for the car with 
+carIndex that is being passed
+*/
 if(!isset($_GET['carIndex']))
 {
 	$carIndex="Not data supplied";
 }
 else
 {
-	$carIndex=$_GET['carIndex'];
+  $carIndex=$_GET['carIndex'];
+  $_SESSION['carIndex'] = $carIndex;
 }
 require 'config.php';
 $sqlQuery=$pdo->prepare('SELECT * from cars WHERE carIndex=:carIndex');
@@ -35,7 +41,7 @@ else{
 <nav class="navbar navbar-expand-md fixed-top">
   <!-- Brand -->
   <a class="navbar-brand" href="index.php">
-    CarHunterLogo
+    <img src="images/logo.png" alt="logo">
   </a>
   <!-- Toggler/collapsibe Button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -62,21 +68,23 @@ else{
     </ul>';
     if(isset($_SESSION['name'])==true){
       
-        echo '<a href="logout.php"><i class="far fa-user">'.'Hi!'.$_SESSION['name'].'Logout</i></a>';
+        echo '<a href="logout.php"><i class="far fa-user">&nbsp;Logout</i></a>';
       }
       else{
-        echo '<a href="login.php"><p><i class="far fa-user">Login<p></i></a>';
+        echo '<a href="login.php"><i class="far fa-user">&nbsp;Login</i></a>';
       }
   }
   else
   {
+    
     if(isset($_SESSION['name'])==true){
       
-        echo '<a href="logout.php"><i class="far fa-user">'.'Hi!'.$_SESSION['name'].'Logout</i></a>';
-      }
-      else{
-        echo '<a href="login.php"><p><i class="far fa-user">Login<p></i></a>';
-      }  
+      echo '<a href="logout.php"><i class="far fa-user">&nbsp;Logout</i></a>';
+    }
+    else{
+      echo '<a href="login.php"><i class="far fa-user">&nbsp;Login</i></a>';
+    }
+  
   }
   ?>  
   
@@ -86,10 +94,13 @@ else{
 <br>
 <br>
 <br>
+
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
+ 
     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
     <li class="breadcrumb-item"><a href="car-search.php">Car Results</a></li>
+    <li class="breadcrumb-item active">View Car Details</li>
     
   </ol>
 </nav>
@@ -230,7 +241,58 @@ else{
                 <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4 justify-centre">
-                <a href="#" class="btn btn-danger">Buy</a>
+
+                <!-- Button trigger modal -->
+<button type="button" name="btnBuy" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Buy
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     
+      <div class="modal-body">
+        <?php
+        if(!isset($_SESSION['name']))
+        {
+          echo ' <form action="register.php" method="POST">';
+          echo "<h5> Sorry you can't buy a car without registering with us! </h5>";
+          echo '<div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-warning">Register</button>
+        </div>';
+        echo '</form>';
+       
+        }
+        else {
+          echo ' <form action="carUpdateSoldField.php" method="POST">';
+          echo "<h5> Enter details below. </h3>";;
+         echo '<input type="text" class="form-control" name="name" id="name"  placeholder="Enter your name">' ;
+         echo '<br>';
+         echo '<input type="text" class="form-control" name="addr" id="addr"  placeholder="Enter your Address">';
+         echo '<br>';
+         echo '<input type="text" class="form-control" name="cc" id="cc" placeholder="Enter your Credit Card Info">' ;
+         echo '<br>';
+          echo '<div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit"  class="btn btn-success">Confirm</button>
+        </div>';
+        echo '</form>';
+        }
+        
+        ?>
+      </div>
+      
+    </div>
+  </div>
+</div>
                 </div>
                 <div class="col-md-4"></div>
                 </div>

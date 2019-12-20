@@ -5,15 +5,10 @@
 	
 }
 .navbar-brand{
-	margin-left: 20px;
-	color: white;
-	font-weight: bold;
-}
+	margin-left: 5px;
+	}
 .navbar-brand:hover{
-	margin-left: 20px;
-	color: #00d7d2;
-	font-weight: bold;
-
+	margin-left: 5px;
 }
 
 .far{

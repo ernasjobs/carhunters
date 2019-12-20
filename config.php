@@ -1,3 +1,11 @@
+/* 
+makes a PDO connection to 'carstore' database
+throws an exception if something went wrong.
+
+anytime we want to make a connection to database we can include this script
+by making use of require('config.php') method 
+*/
+
 <?php
 $host = 'localhost';
 $db   = 'carstore';

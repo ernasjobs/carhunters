@@ -2,6 +2,13 @@
 <?php
 session_start();
 require 'config.php';
+/* 
+if btnSubmit is clicked we will make a query to database with
+username and password that is being provided.
+if number of row returned is equals to one then we check role attribute,
+if role is equals to 'admin' we are pointing to admin panel otherwise
+to  homepage
+*/
 if(isset($_POST['btnSubmit'])){
     $textUsername=$_POST['txtUsername'];
     $textPassword=$_POST['txtPass'];
@@ -10,27 +17,21 @@ if(isset($_POST['btnSubmit'])){
     $num_rows = $stmt->rowCount();
     if($num_rows==1)
     {
-      
         $query=$stmt->fetch();
         $_SESSION['name']=$query['name'];
         $_SESSION['username']=$query['username'];
         $_SESSION['role']=$query['role'];
         if($query['role']=="admin"){
-            header("Location:admin.php");
-        }else if($query['role']=="user"){
-          
-            header("Location:index.php");
-        }
-     
-    }
+            header("Location:admin1.php");
+   } 
     else{
-      $_SESSION['response']='Login Failed!';
-
+           header("Location:index.php");
+        } 
     }
-    
-    //executing the query and storing the incoming data in $ result
-   
-
+    else
+    {
+      $_SESSION['response']='Login Failed!';
+    }
 }
 
 ?>
@@ -49,9 +50,9 @@ if(isset($_POST['btnSubmit'])){
         <body>
         <nav class="navbar navbar-expand-md fixed-top">
         <!-- Brand -->
-          <a class="navbar-brand" href="index.php">
-            CarHunterLogo
-          </a>
+        <a class="navbar-brand" href="index.php">
+         <img src="images/logo.png" alt="logo">
+        </a>
           <!-- Toggler/collapsibe Button -->
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -104,17 +105,14 @@ if(isset($_POST['btnSubmit'])){
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fas fa-user"></i></span>
                         </div>
-                        <input type="text" name="txtUsername" class="form-control" placeholder="username">
+                        <input type="text" name="txtUsername" class="form-control" placeholder="username" required>
                         
                       </div>
                       <div class="input-group form-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text"><i class="fas fa-key"></i></span>
                         </div>
-                        <input type="password" name="txtPass" class="form-control" placeholder="password">
-                      </div>
-                      <div class="row align-items-center remember">
-                        <input type="checkbox">Remember Me
+                        <input type="password" name="txtPass" class="form-control" placeholder="password" required>
                       </div>
                       <div class="form-group">
                         <input type="submit" name="btnSubmit" value="Login" class="btn float-right login_btn">

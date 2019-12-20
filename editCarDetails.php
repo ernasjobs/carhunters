@@ -44,7 +44,7 @@ else{
 <nav class="navbar navbar-expand-md fixed-top">
   <!-- Brand -->
   <a class="navbar-brand" href="index.php">
-    CarHunterLogo
+    <img src="images/logo.png" alt="logo">
   </a>
   <!-- Toggler/collapsibe Button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -54,26 +54,21 @@ else{
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="addCar.php">Add a car</a>
+        <a class="nav-link" href="admin1.php">View Cars</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="updateCar.php">Update car</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="deleteCar.php">Delete</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="viewOrders.php">Orders</a>
-      </li>   
+      
     </ul>
     <?php 
-    if(isset($_SESSION['name'])==true){
+  if(isset($_SESSION['name'])==true){
       
-      echo '<a href="logout.php"><i class="far fa-user">'.'Hi!'.$_SESSION['name'].'Logout</i></a>';
-    }
-    else{
-      echo '<a href="login.php"><p><i class="far fa-user">Login<p></i></a>';
-    }
+    echo '<a href="logout.php"><i class="far fa-user">&nbsp;Logout</i></a>';
+  }
+  else{
+    echo '<a href="login.php"><i class="far fa-user">&nbsp;Login</i></a>';
+  }
     ?>  
   </div>
 </nav>
@@ -83,7 +78,8 @@ else{
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-    <li class="breadcrumb-item"><a href="admin.php">Main Panel</a></li>
+    <li class="breadcrumb-item"><a href="admin1.php">Main Panel</a></li>
+    <li class="breadcrumb-item active" >Update Car Details</li>
     
   </ol>
 </nav>

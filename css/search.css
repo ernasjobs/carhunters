@@ -4,20 +4,18 @@ body {
   width: 100%;
   height: 100%;
 }
+select, option {
+    width:50px;
+}
 .navbar-nav  {
-	margin-left: 300px;
+	margin-left: 200px;
 	
 }
 .navbar-brand{
-	margin-left: 20px;
-	color: white;
-	font-weight: bold;
-}
+	margin-left: 5px;
+	}
 .navbar-brand:hover{
-	margin-left: 20px;
-	color: #00d7d2;
-	font-weight: bold;
-
+	margin-left: 5px;
 }
 
 .far{
@@ -60,10 +58,10 @@ body {
   td{
     padding: 20px 0px 0px 10px;
 }
-.searcharea{
+.searcharea {
 	background-color: #00d7d2;
 	width: 462px;
-	height: 300px;
+	height: 275px;
 	position: absolute;
     top: 25%;
     margin-left: 400px;
@@ -71,7 +69,19 @@ body {
    
 
 }
+.btn{
+	background-color: #ff4436;
+	color: white;
+	font-weight: bold;
+	font-size: 18px;
+	border-radius: 6px;
+	width: 100px;
+	border: none;
+}
+.btn-info :hover{
+	background-color: #f51807;
 
+}
 .cardeals{
  position: relative; 
 }
@@ -94,6 +104,16 @@ body {
 .cardeals .card-body{
  padding: 1em;
 }
+.btn-primary{
+	background-color: #ff4436;
+	width: 200px;
+	margin-left: 50px;
+}
+.btn-primary:hover{
+	background-color: #f51807;
+	width: 200px;
+	margin-left: 50px;
+}
 .page-footer{
 	margin-top: 20px;
 	background-color: #313c53;
@@ -104,18 +124,18 @@ body {
 }
 .header{
  background-image: url('../images/carousel-lightbulb.jpg');
- height: 80%;
+ height: 75%;
  width: 100%;
  background-attachment: fixed;
  background-size: cover;
  background-position: center;
  }
- .btn{
-	background-color: #ff4436;
-	color: white;
-	font-weight: bold;
-	font-size: 18px;
-	border-radius: 6px;
-	width: 100px;
-	border: none;
+ #initialSearch{
+    display:block;
+}
+#pag1{
+    display:block;
+}
+#pag2{
+    display:none;
 }

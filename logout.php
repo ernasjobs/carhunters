@@ -1,3 +1,4 @@
+// unsets the following session variables
 <?php 
 session_start();
     if(isset($_SESSION['name']))

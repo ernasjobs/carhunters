@@ -1,25 +1,11 @@
 <?php
 session_start();
-if(isset($_SESSION['make']))
-{
-unset($_SESSION['make']);       
-}
-if(isset($_SESSION['model']))
-{
-unset($_SESSION['model']);       
-}
-if(isset($_SESSION['colour']))
-{
-unset($_SESSION['colour']);       
-}
-if(isset($_SESSION['min_price']))
-{
-unset($_SESSION['min_price']);       
-}
-if(isset($_SESSION['max_price']))
-{
-unset($_SESSION['max_price']);       
-}
+require 'indexsessions.php';
+/*
+ Javascript function which connects to database and
+ selects all makes, to get rid of repeated data we 
+ have used DISTINCT keyword
+ */
 
 function load_make()
 {
@@ -44,6 +30,15 @@ function load_region()
   $data='';
   require 'config.php';
   $sqlMake=$pdo->prepare('SELECT DISTINCT region FROM cars ORDER BY region ASC');
+  $sqlMake ->execute();
+  $data=$sqlMake-> fetchAll();
+  return $data;
+}
+function load_reg()
+{
+  $data='';
+  require 'config.php';
+  $sqlMake=$pdo->prepare('SELECT DISTINCT Reg FROM cars ORDER BY Reg ASC');
   $sqlMake ->execute();
   $data=$sqlMake-> fetchAll();
   return $data;
@@ -76,8 +71,8 @@ if (isset($_COOKIE["admin"])) {
 <body>
 <nav class="navbar navbar-expand-md fixed-top">
   <!-- Brand -->
-  <a class="navbar-brand" href="">
-    CarHunterLogo
+  <a class="navbar-brand" href="index.php">
+    <img src="images/logo.png" alt="logo">
   </a>
   <!-- Toggler/collapsibe Button -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -103,22 +98,18 @@ if (isset($_COOKIE["admin"])) {
     <?php 
     if(isset($_SESSION['name'])==true){
       
-      echo '<a href="logout.php"><i class="far fa-user">'.'Hi!'.$_SESSION['name'].'Logout</i></a>';
+      echo '<a href="logout.php"><i class="far fa-user">&nbsp;Logout</i></a>';
     }
     else{
-      echo '<a href="login.php"><p><i class="far fa-user">Login<p></i></a>';
+      echo '<a href="login.php"><i class="far fa-user">&nbsp;Login</i></a>';
     }
     ?>
   </div>
 </nav>
 <header class="header">
-  <div class="overlay"></div>
-  <div class="usergreeting">
-  <h1>Hi...!</h1> 
-  </div>
   <div class="searcharea">
   <div class="container">
-    <form action="car-search.php" method="post">
+    <form action="carsearch1.php" method="post">
       <h3 class="text-center">Find your favourite car</h3>
       <table>
         <tr>
@@ -152,7 +143,17 @@ if (isset($_COOKIE["admin"])) {
           </td>
         </tr>
         <tr>
-          <td></td>
+          <td>
+          <select name="reg" id="reg" class="mdb-select md-form" searchable="Search here..">
+            <option value="" disabled selected>Select Reg</option>
+            <?php 
+            $data=load_reg();
+            foreach ($data as $row): 
+            echo '<option value="'.$row["Reg"].'">'.$row["Reg"].'</option>';
+            ?>
+            <?php endforeach ?>
+            </select>
+          </td>
           <td>
             <select name="region" id="region" class="mdb-select md-form" searchable="Search here..">
             <option value="" disabled selected>Select region</option>
@@ -202,11 +203,16 @@ if (isset($_COOKIE["admin"])) {
           <td><input type="submit" name="submit" class="btn btn-danger" value="Search"></td>
           <td></td>
         </tr>
+       
       </table>
     </form>
   </div>
 </header>
 </div>
+<!- 
+in  this div we echo the details of the last three cars in our database 
+the output is echoed in a card component
+->
 <div class="cardeals" id="cardeals">
   <div class="container">
   <h1>Latest Car Deals</h1>
@@ -256,6 +262,9 @@ if (isset($_COOKIE["admin"])) {
 </body>
 </html>
 <script>
+  /* load new data in model dropdown list,
+     and removes old one on each selection of make dropdown list
+   */
 $(document).ready(function(){
  $('#make').change(function(){
 

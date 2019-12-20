@@ -1,3 +1,6 @@
+/* gets makeId from AJAX post request and
+runs a query to find find models that are 
+part of that make */
 <?php
 require 'config.php';
 $output='';

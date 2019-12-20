@@ -9,7 +9,7 @@ if (isset($_GET['pageno'])) {
 } else {
   $pageno = 1;
 }
-$no_of_records_per_page = 4;
+$no_of_records_per_page = 1000;
 $offset = ($pageno-1) * $no_of_records_per_page;
 $total_pages_sql = "SELECT * FROM cars";
 $result =$pdo->prepare($total_pages_sql);
@@ -32,7 +32,7 @@ $total_pages = ceil($total_rows / $no_of_records_per_page);
 <nav class="navbar navbar-expand-md fixed-top">
   <!-- Brand -->
   <a class="navbar-brand" href="index.php">
-    CarHunterLogo
+    <img src="images/logo.png" alt="logo">
   </a>
 
   <!-- Toggler/collapsibe Button -->
@@ -50,9 +50,6 @@ $total_pages = ceil($total_rows / $no_of_records_per_page);
         <a class="nav-link" href="updateCar.php">Update car</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="deleteCar.php">Delete</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="viewOrders.php">Orders</a>
       </li>
       
@@ -60,10 +57,10 @@ $total_pages = ceil($total_rows / $no_of_records_per_page);
     <?php 
     if(isset($_SESSION['name'])==true){
       
-      echo '<a href="logout.php"><i class="far fa-user">'.'Hi!'.$_SESSION['name'].'Logout</i></a>';
+      echo '<a href="logout.php"><i class="far fa-user">&nbsp;Logout</i></a>';
     }
     else{
-      echo '<a href="login.php"><p><i class="far fa-user">Login<p></i></a>';
+      echo '<a href="login.php"><i class="far fa-user">&nbsp;Login</i></a>';
     }
     ?>
    
@@ -79,6 +76,7 @@ $total_pages = ceil($total_rows / $no_of_records_per_page);
 </nav>
     <div class="row justify-content-center">
         <div class="col-3 text-center">
+          
             <h2>List of all cars</h2>
             <br>
         </div>

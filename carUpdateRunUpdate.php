@@ -1,3 +1,7 @@
+/* 
+Updates data of the car with carIndex=$$_SESSION['carIndex']
+
+*/
 <?php
 require 'config.php';
 session_start(); 
